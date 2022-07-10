@@ -15,7 +15,9 @@ class ValorantRepository @Inject constructor(
     fun getAllAgents(): Flow<Resource<List<Agents>>> = flow {
         try {
             emit(Resource.Loading())
-            val agents = apiService.getAllAgents().data
+            val agents = apiService.getAllAgents().data.filter {
+                it.isPlayableCharacter
+            }
             emit(Resource.Success(data = agents))
         } catch (e: HttpException) {
             emit(Resource.Error(message = e.localizedMessage ?: "Network Error!"))
