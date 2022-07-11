@@ -1,6 +1,8 @@
 package com.suatzengin.infovalorant.di
 
 import com.suatzengin.infovalorant.data.remote.ValorantApiService
+import com.suatzengin.infovalorant.data.repository.ValorantRepositoryImpl
+import com.suatzengin.infovalorant.domain.repository.ValorantRepository
 import com.suatzengin.infovalorant.util.Constants
 import dagger.Module
 import dagger.Provides
@@ -12,7 +14,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object NetworkModule {
+object AppModule {
 
     @Provides
     @Singleton
@@ -24,5 +26,10 @@ object NetworkModule {
             .create(ValorantApiService::class.java)
     }
 
+    @Provides
+    @Singleton
+    fun provideRepository(apiService: ValorantApiService): ValorantRepository {
+        return ValorantRepositoryImpl(apiService)
+    }
 
 }

@@ -1,21 +1,22 @@
-package com.suatzengin.infovalorant.data.repository
+package com.suatzengin.infovalorant.domain.use_case.agents
 
-import com.suatzengin.infovalorant.data.remote.ValorantApiService
 import com.suatzengin.infovalorant.data.remote.agents.Agents
+import com.suatzengin.infovalorant.domain.repository.ValorantRepository
 import com.suatzengin.infovalorant.util.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import javax.inject.Inject
 
-class ValorantRepository @Inject constructor(
-    private val apiService: ValorantApiService
-) {
 
-    fun getAllAgents(): Flow<Resource<List<Agents>>> = flow {
+class GetAllAgentsUseCase @Inject constructor(
+    private val repository: ValorantRepository
+) {
+    operator fun invoke(): Flow<Resource<List<Agents>>> = flow {
+        emit(Resource.Loading())
         try {
-            emit(Resource.Loading())
-            val agents = apiService.getAllAgents().data.filter {
+
+            val agents = repository.getAllAgents().data.filter {
                 it.isPlayableCharacter
             }
             emit(Resource.Success(data = agents))
