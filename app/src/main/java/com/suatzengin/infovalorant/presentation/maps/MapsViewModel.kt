@@ -7,8 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.suatzengin.infovalorant.domain.use_case.maps.GetAllMapsUseCase
 import com.suatzengin.infovalorant.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,18 +24,20 @@ class MapsViewModel @Inject constructor(
     }
 
     private fun getAllMaps() {
-        getAllMapsUseCase.invoke().onEach { result ->
-            when(result){
-                is Resource.Success -> {
-                    _state.value = _state.value.copy(maps = result.data ?: emptyList())
-                }
-                is Resource.Error -> {
-                    _state.value = _state.value.copy(error = result.message ?: "Error")
-                }
-                is Resource.Loading -> {
-                    _state.value = _state.value.copy(isLoading = true)
+        viewModelScope.launch {
+            getAllMapsUseCase().collect { result ->
+                when(result){
+                    is Resource.Success -> {
+                        _state.value = _state.value.copy(maps = result.data ?: emptyList())
+                    }
+                    is Resource.Error -> {
+                        _state.value = _state.value.copy(error = result.message ?: "Error")
+                    }
+                    is Resource.Loading -> {
+                        _state.value = _state.value.copy(isLoading = true)
+                    }
                 }
             }
-        }.launchIn(viewModelScope)
+        }
     }
 }

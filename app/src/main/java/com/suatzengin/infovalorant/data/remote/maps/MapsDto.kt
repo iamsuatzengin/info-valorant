@@ -1,7 +1,5 @@
 package com.suatzengin.infovalorant.data.remote.maps
 
-import com.suatzengin.infovalorant.domain.Maps
-
 data class MapsDto(
     val uuid: String,
     val displayName: String,
@@ -18,13 +16,3 @@ data class MapsDto(
     val callouts: List<Callouts>
 )
 
-fun MapsDto.toMaps(): Maps {
-    return Maps(
-        uuid = uuid,
-        displayName = displayName,
-        coordinates = coordinates,
-        displayIcon = displayIcon,
-        listViewIcon = listViewIcon,
-        splash = splash
-    )
-}

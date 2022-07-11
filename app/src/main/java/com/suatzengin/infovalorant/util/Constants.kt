@@ -6,4 +6,6 @@ object Constants {
     const val AGENTS = "/v1/agents"
 
     const val MAPS = "/v1/maps"
+
+    const val WEAPONS = "/v1/weapons"
 }

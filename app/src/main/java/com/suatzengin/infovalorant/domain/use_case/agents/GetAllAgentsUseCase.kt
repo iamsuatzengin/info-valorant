@@ -19,6 +19,7 @@ class GetAllAgentsUseCase @Inject constructor(
             val agents = repository.getAllAgents().data.filter {
                 it.isPlayableCharacter
             }
+            println("${agents[0].displayName} dsa")
             emit(Resource.Success(data = agents))
         } catch (e: HttpException) {
             emit(Resource.Error(message = e.localizedMessage ?: "Network Error!"))

@@ -1,34 +1,45 @@
 package com.suatzengin.infovalorant.presentation.agents
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import coil.compose.SubcomposeAsyncImage
 import com.suatzengin.infovalorant.data.remote.agents.Agents
+import com.suatzengin.infovalorant.presentation.navigation.Screen
 import com.suatzengin.infovalorant.ui.theme.background
+import com.suatzengin.infovalorant.util.getColorAgentBg
+
 
 @Composable
 fun AgentsScreen(
-    viewModel: AgentsViewModel = hiltViewModel()
+    viewModel: AgentsViewModel = hiltViewModel(),
+    navController: NavController
 ) {
     val state = viewModel.state
     val list = state.value.agents
+
 
     Scaffold(
         backgroundColor = background,
         topBar = {
             TopAppBar(
                 title = {
-                    Text("Agents",style = MaterialTheme.typography.subtitle1)},
+                    Text("Agents", style = MaterialTheme.typography.subtitle1)
+                },
                 backgroundColor = Color.Transparent,
                 contentColor = Color.White,
                 elevation = 0.dp
@@ -43,7 +54,9 @@ fun AgentsScreen(
                 columns = GridCells.Fixed(count = 2)
             ) {
                 items(items = list) { item ->
-                    AgentListItem(item)
+                    AgentListItem(item) { agent ->
+                        navController.navigate(Screen.AgentDetail.route + "/${agent.uuid}")
+                    }
                 }
             }
         }
@@ -52,18 +65,28 @@ fun AgentsScreen(
 
 
 @Composable
-fun AgentListItem(agent: Agents) {
+fun AgentListItem(agent: Agents, onClick: (Agents) -> Unit) {
 
     Box(
         modifier = Modifier
             .height(200.dp)
             .fillMaxWidth()
+            .clickable {
+                onClick(agent)
+            }
     ) {
         Card(
-            backgroundColor = Color(0xFFFFFBF5),
+            backgroundColor = Color.Transparent,
             modifier = Modifier
                 .padding(8.dp)
                 .size(150.dp)
+                .background(
+                    brush = Brush.linearGradient(
+                        getColorAgentBg()[agent.displayName.lowercase()] ?: listOf(Color.White)
+                    ), shape = RoundedCornerShape(12.dp)
+                ),
+            shape = RoundedCornerShape(0.dp)
+
         ) {
             Column(
                 verticalArrangement = Arrangement.SpaceBetween
@@ -81,6 +104,7 @@ fun AgentListItem(agent: Agents) {
                 )
             }
         }
+
 
         SubcomposeAsyncImage(
             model = agent.fullPortraitV2, contentDescription = "Icon Agent",

@@ -36,7 +36,7 @@ fun BottomBar(
                 BottomNavigationItem(
                     icon = {
                         Icon(
-                            painter = painterResource(id = screen.image),
+                            painter = painterResource(id = screen.image!!),
                             contentDescription = null,
                             modifier = Modifier.size(28.dp)
                         )

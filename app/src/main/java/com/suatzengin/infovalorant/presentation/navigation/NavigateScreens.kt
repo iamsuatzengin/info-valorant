@@ -8,9 +8,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.suatzengin.infovalorant.presentation.agents.AgentsScreen
+import com.suatzengin.infovalorant.presentation.agents.detail.AgentDetailScreen
 import com.suatzengin.infovalorant.presentation.maps.MapsScreen
 import com.suatzengin.infovalorant.presentation.ranks.RanksScreen
 import com.suatzengin.infovalorant.presentation.weapons.WeaponsScreen
+import com.suatzengin.infovalorant.presentation.weapons.detail.WeaponDetailScreen
 
 
 @Composable
@@ -22,16 +24,24 @@ fun NavigateScreens(navController: NavHostController, paddingValues: PaddingValu
         modifier = Modifier.padding(paddingValues = paddingValues)
     ) {
         composable(Screen.Agents.route) {
-            AgentsScreen()
+            AgentsScreen(navController = navController)
         }
         composable(Screen.Weapons.route) {
-            WeaponsScreen()
+            WeaponsScreen(navController = navController)
         }
         composable(Screen.Maps.route) {
             MapsScreen()
         }
         composable(Screen.Ranks.route) {
             RanksScreen()
+        }
+        composable(
+            route = Screen.AgentDetail.route + "/{agentUUID}"
+        ) {
+            AgentDetailScreen()
+        }
+        composable(route = Screen.WeaponDetail.route + "/{weaponUUID}"){
+            WeaponDetailScreen()
         }
     }
 }
