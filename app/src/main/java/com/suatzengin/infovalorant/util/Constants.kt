@@ -8,4 +8,6 @@ object Constants {
     const val MAPS = "/v1/maps"
 
     const val WEAPONS = "/v1/weapons"
+
+    const val TIERS = "/v1/competitivetiers"
 }

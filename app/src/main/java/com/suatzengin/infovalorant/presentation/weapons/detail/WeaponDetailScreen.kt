@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.suatzengin.infovalorant.data.remote.weapons.Weapons
+import com.suatzengin.infovalorant.ui.theme.background
 
 @Composable
 fun WeaponDetailScreen(
@@ -27,7 +28,8 @@ fun WeaponDetailScreen(
     Scaffold(
         topBar = {
 
-        }
+        },
+        backgroundColor = background
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
