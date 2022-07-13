@@ -5,6 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.suatzengin.infovalorant.data.remote.weapons.Skin
+import com.suatzengin.infovalorant.data.remote.weapons.Weapons
 import com.suatzengin.infovalorant.domain.use_case.weapons.GetWeaponByUUID
 import com.suatzengin.infovalorant.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +18,7 @@ import javax.inject.Inject
 class WeaponDetailViewModel @Inject constructor(
     private val getWeaponByUUIDUseCase: GetWeaponByUUID,
     savedStateHandle: SavedStateHandle
-) : ViewModel(){
+) : ViewModel() {
 
     private val _state = mutableStateOf(WeaponDetailState())
     val state: State<WeaponDetailState>
@@ -27,6 +29,7 @@ class WeaponDetailViewModel @Inject constructor(
             getWeaponByUUID(it)
         }
     }
+
     private fun getWeaponByUUID(uuid: String) {
         viewModelScope.launch {
             getWeaponByUUIDUseCase(uuid).collectLatest { result ->
@@ -44,5 +47,15 @@ class WeaponDetailViewModel @Inject constructor(
 
             }
         }
+    }
+
+    fun randomSkins(weapon: Weapons): List<Skin> {
+        val skins = weapon.skins.toMutableList()
+
+        val randomSkins = arrayListOf<Skin>()
+        repeat(5) {
+            randomSkins.add(skins.random())
+        }
+        return randomSkins
     }
 }

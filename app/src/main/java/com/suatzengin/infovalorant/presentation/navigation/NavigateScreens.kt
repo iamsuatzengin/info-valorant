@@ -43,5 +43,6 @@ fun NavigateScreens(navController: NavHostController, paddingValues: PaddingValu
         composable(route = Screen.WeaponDetail.route + "/{weaponUUID}"){
             WeaponDetailScreen()
         }
+
     }
 }

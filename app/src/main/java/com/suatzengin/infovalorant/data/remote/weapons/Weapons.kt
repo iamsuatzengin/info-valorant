@@ -10,5 +10,6 @@ data class Weapons(
     val assetPath: String,
     val weaponStats: WeaponStats?,
     val shopData: ShopData?,
-    val skins: List<Skin>
+    val skins: List<Skin>,
+
 )

@@ -9,9 +9,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,6 +21,7 @@ import androidx.navigation.NavController
 import coil.compose.SubcomposeAsyncImage
 import com.suatzengin.infovalorant.data.remote.weapons.Weapons
 import com.suatzengin.infovalorant.presentation.navigation.Screen
+import com.suatzengin.infovalorant.ui.theme.background
 
 @Composable
 fun WeaponsScreen(
@@ -30,13 +29,35 @@ fun WeaponsScreen(
     navController: NavController
 ) {
     val state = viewModel.state.value
-    LazyVerticalGrid(columns = GridCells.Fixed(2)) {
-        items(state.weapons) { weapon ->
-            WeaponsItem(weapon = weapon){
-                navController.navigate(Screen.WeaponDetail.route + "/${weapon.uuid}")
+    Scaffold(
+        backgroundColor = background,
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(
+                        text = "Weapons",
+                        style = MaterialTheme.typography.subtitle1
+                    )
+                },
+                backgroundColor = Color.Transparent, contentColor = Color.White,
+                elevation = 0.dp
+            )
+        },
+    ) {
+        Column(
+            modifier = Modifier.padding(paddingValues = it)
+        ) {
+            LazyVerticalGrid(columns = GridCells.Fixed(2)) {
+                items(state.weapons) { weapon ->
+                    WeaponsItem(weapon = weapon) {
+                        navController.navigate(Screen.WeaponDetail.route + "/${weapon.uuid}")
+                    }
+                }
             }
         }
     }
+
+
 }
 
 @Composable

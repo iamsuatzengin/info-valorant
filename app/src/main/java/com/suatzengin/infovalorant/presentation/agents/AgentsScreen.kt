@@ -1,5 +1,7 @@
 package com.suatzengin.infovalorant.presentation.agents
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -32,7 +34,6 @@ fun AgentsScreen(
     val state = viewModel.state
     val list = state.value.agents
 
-
     Scaffold(
         backgroundColor = background,
         topBar = {
@@ -48,16 +49,24 @@ fun AgentsScreen(
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(paddingValues = it)
+            modifier = Modifier.padding(paddingValues = it),
+            verticalArrangement = Arrangement.Center
         ) {
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(count = 2)
+            AnimatedVisibility(
+                visible = !state.value.isLoading, enter = fadeIn(initialAlpha = 0.2f)
             ) {
-                items(items = list) { item ->
-                    AgentListItem(item) { agent ->
-                        navController.navigate(Screen.AgentDetail.route + "/${agent.uuid}")
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(count = 2)
+                ) {
+                    items(items = list) { item ->
+                        AgentListItem(item) { agent ->
+                            navController.navigate(Screen.AgentDetail.route + "/${agent.uuid}")
+                        }
                     }
                 }
+            }
+            if (state.value.isLoading) {
+                CircularProgressIndicator()
             }
         }
     }

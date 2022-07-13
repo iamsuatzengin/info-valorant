@@ -43,6 +43,10 @@ fun AgentDetailScreen(
                 modifier = Modifier.padding(16.dp)
             ) {
                 AsyncImage(
+                    model = agent.background,
+                    contentDescription = "Agent Image", alpha = 0.2f
+                )
+                AsyncImage(
                     model = agent.fullPortraitV2,
                     contentDescription = "Agent Image"
                 )
@@ -62,7 +66,6 @@ fun AgentDetailScreen(
                             model = agent.role.displayIcon, contentDescription = "role icon",
                             modifier = Modifier
                                 .size(16.dp)
-
                         )
                         Text(
                             text = agent.role.displayName,

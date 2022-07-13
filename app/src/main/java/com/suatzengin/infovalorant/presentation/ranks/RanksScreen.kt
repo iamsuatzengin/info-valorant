@@ -11,9 +11,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.suatzengin.infovalorant.data.remote.ranks.Tier
+import com.suatzengin.infovalorant.ui.theme.background
 
 @Composable
 fun RanksScreen(
@@ -32,11 +31,34 @@ fun RanksScreen(
 
     val listOfTier = state.ranks
 
-    LazyVerticalGrid(columns = GridCells.Fixed(3)) {
-        items(items = listOfTier) { tier ->
-            RankListItem(tier = tier)
+    Scaffold(
+        backgroundColor = background,
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(
+                        text = "Ranks",
+                        style = MaterialTheme.typography.subtitle1
+                    )
+                },
+                backgroundColor = Color.Transparent, contentColor = Color.White,
+                elevation = 0.dp
+            )
+        },
+    ){
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.padding(paddingValues = it),
+            verticalArrangement = Arrangement.Center
+        ){
+            LazyVerticalGrid(columns = GridCells.Fixed(3)) {
+                items(items = listOfTier) { tier ->
+                    RankListItem(tier = tier)
+                }
+            }
         }
     }
+
 }
 
 @Composable

@@ -12,6 +12,7 @@ val bottomBackground = Color(0xFF3F3566)
 val selectedBottomItemColor = Color(0xFFFD4556)
 
 
+
 val FadeColors = listOf(Color(0x517cacff), Color(0xb1414cff), Color(0x663c6cff), Color(0x8291a4ff))
 val BreachColors = listOf(Color(0xffbc542d), Color(0xff58394d), Color(0xffa06c45), Color(0xff50785d))
 val RazeColors = listOf(Color(0xffd89e4f), Color(0xff2c4446), Color(0xff3b6f54), Color(0xffe36230))

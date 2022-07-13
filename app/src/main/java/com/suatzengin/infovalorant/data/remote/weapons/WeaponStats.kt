@@ -12,5 +12,5 @@ data class WeaponStats(
     val feature: String,
     val fireMode: String?,
     val altFireType: String,
-
+    val damageRanges: List<DamageRange>
 )
